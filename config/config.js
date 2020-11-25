@@ -21,6 +21,9 @@ module.exports = {
         database: "nodebird",
         host: "127.0.0.1",
         dialect: "mysql",
+        dialectOptions: {
+          "ssl": true
+        },
         logging: false,
       },
 };
