@@ -5,6 +5,8 @@ const path = require('path');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
+
+// passport는 로그인 기능 구현을 위한 모듈이다.
 const passport = require('passport');
 const helmet = require('helmet');
 const hpp = require('hpp');
@@ -75,6 +77,8 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(session(sessionOption));
 
+// passport.initialize 미들웨어는 요청(req 객체)에 passport 설정을 심고,
+// passport.session 미들웨어는 req.session 객체에 passport 정보를 저장한다.
 app.use(passport.initialize());
 app.use(passport.session());
 

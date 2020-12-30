@@ -7,6 +7,7 @@ const router = express.Router();
 router.use((req, res, next) => {
     // console.log(req);
 
+    // 모든 템플릿 엔진에서 공통으로 사용하는 값들이기 때문에, res.locals로 값을 설정한다.
     res.locals.user = req.user;
     res.locals.followerCount = req.user ? req.user.Followers.length : 0;
     res.locals.followingCount = req.user ? req.user.Followings.length : 0;
@@ -52,6 +53,8 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+// 데이터베이스에서 해당 해시태그를 검색한 후, 해시태그가 있다면 시퀄라이즈에서 제공하는 getPosts 메서드로 모든 게시글을 가져온다.
+// 게시글을 가져올 때는 작성자 정보를 합친다.
 router.get('/hashtag', async (req, res, next) => {
     const query = req.query.hashtag;
     if(!query) {
@@ -59,6 +62,7 @@ router.get('/hashtag', async (req, res, next) => {
     }
 
     try {
+        // 먼저 게시글을 조회한 뒤 결과를 twits에 넣어 렌더링한다.
         const hashtag = await Hashtag.findOne({where: {title:query}});
         let posts = [];
         if (hashtag) {

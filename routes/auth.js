@@ -6,6 +6,8 @@ const User = require('../models/user');
 
 const router = express.Router();
 
+// 기존에 같은 이메일로 가입한 사용자가 있는지 검색하고, 있다면 다른 페이지로 redirect한다.
+// 같은 이메일로 가입한 사용자가 없다면, 사용자 정보를 만들어서 저장한다. 이때 비밀먼호는 hash된 걸 저장한다.
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
     const {email, nick, password} = req.body;
     try {

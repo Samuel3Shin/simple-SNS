@@ -8,7 +8,7 @@ module.exports = () => {
     passport.use(new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
-    }, async (email, password, done) => {
+    }, async (email, password, done) => { // 여기서 done 함수는 passport.authentication의 콜백 함수이다.
         try {
             const exUser = await User.findOne({where: {email}});
             if( exUser ) {

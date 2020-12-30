@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+// 사용자 정보를 저장하는 MySQL 모델이다.
+// 이메일, 닉네임, 비밀번호를 저장하고, SNS 로그인을 했을 경우에는 provider와 snsId를 저장한다.
 module.exports = class User extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
@@ -37,6 +39,8 @@ module.exports = class User extends Sequelize.Model {
         });
     }
 
+    // User 모델과 Post 모델은 1:N 관계에 있으므로 hasMany로 연결된다.
+    // user.getPosts, user.addPosts 같은 관계 메서드들이 생성된다.
     static associate(db) {
         db.User.hasMany(db.Post);
 
